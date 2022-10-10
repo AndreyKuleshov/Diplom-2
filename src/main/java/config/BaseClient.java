@@ -6,7 +6,7 @@ import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 
 public abstract class BaseClient extends Config {
-        protected RequestSpecification getSpec() {
+        protected static RequestSpecification getSpec() {
             return given()
                     .contentType(ContentType.JSON)
                     .baseUri(Config.BASE_URL);

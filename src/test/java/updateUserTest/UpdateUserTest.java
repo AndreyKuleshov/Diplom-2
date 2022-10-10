@@ -1,5 +1,7 @@
 package updateUserTest;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,6 +11,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class UpdateUserTest extends UpdateUserBaseClass {
     @Test
+    @DisplayName("Update user. All fields")
+    @Description("Success")
     public void updateUserAllFieldsTest() {
         String email = randomString().toLowerCase();
         String name = randomString();
@@ -20,6 +24,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .body(NAME_PATH, equalTo(name));
     }
     @Test
+    @DisplayName("Update user's email. Name stays unchanged")
+    @Description("Success")
     public void updateUserEmailTest() {
         String email = randomString().toLowerCase();
         userClient.updateUserEmail(userData.getAccessToken(), new UserUpdateEmail(email))
@@ -30,6 +36,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .body(NAME_PATH, equalTo(user.getName()));
     }
     @Test
+    @DisplayName("Update user's name. Email stays unchanged")
+    @Description("Success")
     public void updateUserNameTest() {
         String name = randomString();
         userClient.updateUserName(userData.getAccessToken(), new UserUpdateName(name))
@@ -40,6 +48,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .body(NAME_PATH, equalTo(name));
     }
     @Test
+    @DisplayName("Update nothing. Name and email stay unchanged")
+    @Description("Success")
     public void updateNothingTest() {
         userClient.updateUserNothing(userData.getAccessToken())
                 .statusCode(HttpStatus.SC_OK)
@@ -49,6 +59,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .body(NAME_PATH, equalTo(user.getName()));
     }
     @Test
+    @DisplayName("Update user's with email that had been used by another user")
+    @Description("Failure")
     public void updateUserWithExistingEmail() {
         userTwo = User.createRandomUser();
         credsUserTwo = UserCredentials.getCredentialsFromUser(userTwo);
@@ -60,6 +72,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
         userClient.deleteUser(userTwoData.getAccessToken());
     }
     @Test
+    @DisplayName("Update user. Unauthorized")
+    @Description("Failure")
     public void updateUserAllFieldsUnauthorizedTest() {
         String email = randomString().toLowerCase();
         String name = randomString();
@@ -69,6 +83,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));
     }
     @Test
+    @DisplayName("Update user's email. Unauthorized")
+    @Description("Failure")
     public void updateUserEmailUnauthorizedTest() {
         String email = randomString().toLowerCase();
         Assert.assertFalse(userClient.updateUserEmail("", new UserUpdateEmail(email))
@@ -77,6 +93,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));
     }
     @Test
+    @DisplayName("Update user's name. Unauthorized")
+    @Description("Failure")
     public void updateUserNameUnauthorizedTest() {
         String name = randomString();
         Assert.assertFalse(userClient.updateUserName("", new UserUpdateName(name))
@@ -85,6 +103,8 @@ public class UpdateUserTest extends UpdateUserBaseClass {
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));
     }
     @Test
+    @DisplayName("Update nothing. Unauthorized")
+    @Description("Failure")
     public void updateNothingUnauthorizedTest() {
         Assert.assertFalse(userClient.updateUserNothing("")
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)

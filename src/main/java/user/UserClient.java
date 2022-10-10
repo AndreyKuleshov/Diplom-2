@@ -2,6 +2,7 @@ package user;
 
 import UserData.UserDataRoot;
 import config.BaseClient;
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 public class UserClient extends BaseClient {
@@ -10,41 +11,46 @@ public class UserClient extends BaseClient {
     protected final String USER_ENDPOINT = "auth/user";
     protected final String EMPTY_JSON_BODY = "{}";
 
+    @Step("Create user")
     public ValidatableResponse createUser(User user) {
         return getSpec()
                 .body(user)
                 .post(CREATE)
                 .then();
     }
-    public ValidatableResponse deleteUser(String token) {
-        return getSpec(token)
-                .delete(USER_ENDPOINT)
-                .then();
+    @Step("Delete user")
+    public void deleteUser(String token) {
+        getSpec(token).delete(USER_ENDPOINT);
     }
+    @Step("Login user")
     public ValidatableResponse loginUser(UserCredentials creds) {
         return getSpec()
                 .body(creds)
                 .post(LOGIN)
                 .then();
     }
+    @Step("Update user")
     public ValidatableResponse updateUser(String token, UserUpdate info) {
         return getSpec(token)
                 .body(info)
                 .patch(USER_ENDPOINT)
                 .then();
     }
+    @Step("Update user's name")
     public ValidatableResponse updateUserName(String token, UserUpdateName info) {
         return getSpec(token)
                 .body(info)
                 .patch(USER_ENDPOINT)
                 .then();
     }
+    @Step("Update user's email")
     public ValidatableResponse updateUserEmail(String token, UserUpdateEmail info) {
         return getSpec(token)
                 .body(info)
                 .patch(USER_ENDPOINT)
                 .then();
     }
+    @Step("Update nothing")
     public ValidatableResponse updateUserNothing(String token) {
         return getSpec(token)
                 .body(EMPTY_JSON_BODY)
