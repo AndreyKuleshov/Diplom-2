@@ -77,7 +77,7 @@ public class UpdateUserTest extends UpdateUserBaseClass {
     public void updateUserAllFieldsUnauthorizedTest() {
         String email = randomString().toLowerCase();
         String name = randomString();
-        Assert.assertFalse(userClient.updateUser("", new UserUpdate(email, name))
+        Assert.assertFalse(userClient.updateUser(EMPTY_TOKEN, new UserUpdate(email, name))
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .and()
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));
@@ -87,7 +87,7 @@ public class UpdateUserTest extends UpdateUserBaseClass {
     @Description("Failure")
     public void updateUserEmailUnauthorizedTest() {
         String email = randomString().toLowerCase();
-        Assert.assertFalse(userClient.updateUserEmail("", new UserUpdateEmail(email))
+        Assert.assertFalse(userClient.updateUserEmail(EMPTY_TOKEN, new UserUpdateEmail(email))
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .and()
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));
@@ -97,7 +97,7 @@ public class UpdateUserTest extends UpdateUserBaseClass {
     @Description("Failure")
     public void updateUserNameUnauthorizedTest() {
         String name = randomString();
-        Assert.assertFalse(userClient.updateUserName("", new UserUpdateName(name))
+        Assert.assertFalse(userClient.updateUserName(EMPTY_TOKEN, new UserUpdateName(name))
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .and()
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));
@@ -106,7 +106,7 @@ public class UpdateUserTest extends UpdateUserBaseClass {
     @DisplayName("Update nothing. Unauthorized")
     @Description("Failure")
     public void updateNothingUnauthorizedTest() {
-        Assert.assertFalse(userClient.updateUserNothing("")
+        Assert.assertFalse(userClient.updateUserNothing(EMPTY_TOKEN)
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .and()
                 .extract().jsonPath().getBoolean(SUCCESS_PATH));

@@ -19,6 +19,7 @@ public abstract class UpdateUserBaseClass {
     final String EMAIL_PATH = "user.email";
     final String NAME_PATH = "user.name";
     final String SUCCESS_PATH = "success";
+    final String EMPTY_TOKEN = "";
 
 
     @Before
