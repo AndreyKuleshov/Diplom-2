@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class CreateOrderBody {
-    List<String> ingredients;
+    private List<String> ingredients;
 
     public CreateOrderBody(List<String> ingredients) {
         this.ingredients = ingredients;

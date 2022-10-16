@@ -1,6 +1,6 @@
 package user;
 
-import UserData.UserDataRoot;
+import userdata.UserDataRoot;
 import config.BaseClient;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
@@ -60,4 +60,12 @@ public class UserClient extends BaseClient {
     public UserDataRoot deserializeResponse(ValidatableResponse response) {
         return response.extract().body().as(UserDataRoot.class);
     }
+    @Step("Delete user if necessary")
+    public void cleanUp(ValidatableResponse response) {
+        UserDataRoot userData = deserializeResponse(response);
+        if (userData.isSuccess()) {
+            deleteUser(userData.getAccessToken());
+        }
+    }
+
 }

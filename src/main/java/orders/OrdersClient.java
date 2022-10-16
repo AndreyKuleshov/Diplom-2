@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersClient extends BaseClient {
-    protected final String ORDERS_ENDPOINT = "orders";
-    protected static final String GET_INGREDIENTS = "ingredients";
+    private static final String ORDERS_ENDPOINT = "orders";
+    private static final String GET_INGREDIENTS = "ingredients";
     private static final String INGREDIENTS_PATH = "order.ingredients";
 
     @Step("Create order. Authorized user")
